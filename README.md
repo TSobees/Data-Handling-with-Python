@@ -1,78 +1,57 @@
-# Data-Handling-with-Python
-Student Score Analysis
-■ Student Scores Data Analysis 
-This project is a simple Python data analysis script that processes a dataset of students’ scores 
-across multiple subjects using the pandas library. It computes each student’s average score, finds 
-the highest and lowest scores per subject and identifies the overall top-performing student. 
+# Student Score Analysis
 
-■ Project Overview 
-The script: 
-1. Loads a CSV file containing student names and their scores. 
-2. Displays the dataset for quick viewing. 
-3. Calculates the average score per student. 
-4. Determines the highest and lowest scores in each subject. 
-5. Identifies the top-performing student based on the highest average score.
-   
-■ Requirements 
-Ensure you have Python and pandas installed using the command: 
-pip install pandas
+[![Project checks](https://github.com/TSobees/Data-Handling-with-Python/actions/workflows/checks.yml/badge.svg)](https://github.com/TSobees/Data-Handling-with-Python/actions/workflows/checks.yml)
 
-■ How to Use 
-1. Clone this repository or download the script. 
-2. Place your dataset (e.g., StudentScores.csv) in a known directory. 
-3. Update the CSV file path in the script. 
-4. Run the script using: python student_scores.py (N.B: you can equally create yours from 
-scratch).
+A portable pandas project that validates student-score CSVs, ranks students,
+handles tied averages, and exports subject summaries. The included records are fictional.
 
-■ Example Output 
-Displays the student scores data, average scores, highest and lowest per subject and the top
-performing student.
+## Run the example
 
-■ Data Format (CSV Example) 
-h 
-Maths 
-Physics 
-Chemistry 
-Biology 
-Geography 
-Further Maths 
-Computer Science 
-Technical Drawing 
-Fisherie
- 80 
-78 
-85 
-70 
-82 
-79 
-90 
-77 
-88 
-92 
-85 
-89 
-90 
-95 
-91 
-93 
-89 
+Use Python 3.12 or 3.13 from the repository root:
 
-87 
-■ Key Functions 
-Function 
-Purpose 
-pd.read_csv() 
-Loads the dataset 
-df.mean(axis=1) 
-Computes row-wise average 
-df.max() / df.min() 
-Finds subject highs and lows 
-df.loc[df['Average'].idxmax()] 
-Finds the top student
- 
-■■■ Author 
-Sobanjo Oluwatosin 
-■ AI/Ml Enthusiast 
-■ https://github.com/TSobees  
-■ License 
-No license 
+```sh
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# Linux/macOS: source .venv/bin/activate
+python -m pip install -r requirements.txt
+python main.py
+```
+
+This prints results and creates `outputs/student_rankings.csv` and
+`outputs/subject_summary.csv`. Generated reports are ignored by Git.
+
+## Analyze your CSV
+
+```sh
+python -m student_scores path/to/scores.csv --output-dir outputs/my-class
+python -m student_scores path/to/scores.csv --subjects "Maths,English" --pass-mark 60
+```
+
+Every row needs a nonblank, unique `Name`. Selected subject scores must be
+numeric, finite and between 0 and 100. Missing scores fail validation instead
+of changing the number of subjects used in an average. Ties share the same
+competition rank. All eleven default subjects are visible in
+[the sample CSV](data/sample_scores.csv).
+
+## Repository layout
+
+```text
+main.py                 Compatible launcher
+student_scores/         Importable analysis functions and CLI
+data/sample_scores.csv  Fictional runnable example
+tests/                  Validation, tie and summary checks
+.github/workflows/      Python 3.12 and 3.13 checks
+```
+
+## Tests and scope
+
+```sh
+python -m unittest discover -s tests -v
+```
+
+These are descriptive summaries; they do not measure teaching quality or
+adjust scores for subject difficulty. Keep actual student records out of commits.
+No reuse license has been added; the repository's original licensing choice is retained.
+
+Author: Sobanjo Oluwatosin. AI assistance was used for the portability,
+validation, exports, documentation and tests in this revision.
